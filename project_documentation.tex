@@ -1,0 +1,246 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Core Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% --- Custom Brand Colors (Tech Mahindra Palette) ---
+\definecolor{mahindrared}{HTML}{E31837}
+\definecolor{impactred}{HTML}{5F0229}
+\definecolor{blueprintnavy}{HTML}{0A0838}
+\definecolor{claritygrey}{HTML}{F6F2EA}
+\definecolor{anchorgrey}{HTML}{4A453D}
+\definecolor{steelgrey}{HTML}{4D4D4F}
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blueprintnavy,
+    filecolor=impactred,      
+    urlcolor=mahindrared,
+    pdftitle={Voice of Associates Console Documentation},
+    pdfpagemode=FullScreen,
+}
+
+% --- Code Block / Listing Styling ---
+\lstset{
+    backgroundcolor=\color{claritygrey},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{steelgrey}\itshape,
+    keepspaces=true,
+    keywordstyle=\color{blueprintnavy}\bfseries,
+    language=Python,
+    numberstyle=\tiny\color{steelgrey},
+    stringstyle=\color{impactred},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{anchorgrey}
+}
+
+% --- Title Page Configuration ---
+\title{
+    \color{mahindrared}\Huge\textbf{Voice of Associates (VOA) Console} \\[0.4em]
+    \large\color{anchorgrey}\textsf{People Analytics \& Engagement Action Dashboard}
+}
+\author{\textbf{Amrit Raj Biswal} \\ \color{anchorgrey}\textsf{Tech Mahindra People Analytics \& Systems Group}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The \textbf{Voice of Associates (VOA)} Console is an enterprise-grade analytics dashboard designed to ingest, clean, normalize, and analyze employee connect sessions, priority risk items, and organizational action plans. It enables HR Business Partners (HRBPs) to identify attrition risks early via a composite, mathematically modeled Risk Score, surface key organizational themes using the proprietary CARES framework, and leverage generative AI for executive briefings. This document details the system's architecture, data pipeline, color-theoretic UI, and algorithms.
+\end{abstract}
+
+\vfill
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.8pt}}
+\begin{center}
+    \small\color{steelgrey}\texttt{Repository Path: c:\textbackslash Users\textbackslash profe\textbackslash Downloads\textbackslash HR P}
+\end{center}
+\newpage
+
+% --- Table of Contents ---
+\tableofcontents
+\newpage
+
+% --- Section: Executive Summary ---
+\section{Executive Summary \& Value Proposition}
+In modern organizational structures, employee feedback is generated across dozens of distinct channels and formats. Collecting, normalising, and reacting to this feedback remains a critical blocker for retention. The Voice of Associates (VOA) Console resolves this bottleneck through the following mechanisms:
+
+\begin{itemize}
+    \item \textbf{Real-Time Attrition Risk Mapping}: Computes a dynamic composite \textbf{Risk Score (0--100)} for every associate connect to highlight high-priority items.
+    \item \textbf{Thematic Trend Grouping}: Automatically extracts unstructured text feedback and maps it against the five pillars of the \textbf{CARES Framework} (Alignment, Career, Empowerment, Recognition, Strive).
+    \item \textbf{Action Center Accountability}: Flattens and tracks assignments, ensuring HR owners resolve outstanding tasks inside a Kanban-style structure.
+    \item \textbf{Dynamic Executive Briefings}: Automatically builds data payloads for LLM APIs (OpenAI or Gemini) to generate five-bullet summaries for quick leadership reviews.
+\end{itemize}
+
+% --- Section: System Architecture ---
+\section{System Architecture \& Data Flow}
+The application structure is built on a clean three-tiered design: an Ingestion \& Processing Engine, a custom Design Theme utility, and a Streamlit UI Console.
+
+\subsection{Core Components}
+\begin{enumerate}
+    \item \textbf{\texttt{app.py}}: The orchestrator of the web UI. Handles Streamlit session states, multi-page routing (6 tabs), dynamic filter queries, and API connections to LLMs.
+    \item \textbf{\texttt{data_loader.py}}: The data-wrangling engine. Features regex-based column normalization, relational double-lookup joins, and a fallback high-fidelity synthetic demo generator.
+    \item \textbf{\texttt{theme.py}}: The branding system. Declares color tokens, overrides default Plotly layout structures, and manages DOM styling using injected CSS and MutationObserver Javascript scripts.
+\end{enumerate}
+
+\subsection{Architectural Layout}
+The diagram below illustrates the ingestion-to-visualization path:
+
+\begin{center}
+\begin{tikzpicture}[nodeDistance=2.5cm, auto]
+    % Style definitions
+    \tikzstyle{box} = [rectangle, draw, thick, text width=4.5cm, minimum height=1.2cm, text centered, rounded corners, draw=blueprintnavy, fill=claritygrey]
+    \tikzstyle{line} = [draw, -latex', thick, anchorgrey]
+
+    % Nodes
+    \node (raw) [box] {\textbf{Excel Uploads}\\ \small\texttt{Data\_Summary} \& \texttt{Data\_Insight}};
+    \node (loader) [box, below of=raw] {\textbf{Data Normalizer}\\ \small\texttt{data\_loader.py}};
+    \node (relational) [box, below of=loader] {\textbf{Database Engine}\\ \small Sessions, Owners \& Themes};
+    \node (app) [box, below of=relational] {\textbf{Console Front-End}\\ \small\texttt{app.py} (Streamlit)};
+    \node (theme) [box, right of=app, node distance=5.5cm] {\textbf{Branding Theme}\\ \small\texttt{theme.py} (Mahindra Red)};
+    \node (ai) [box, left of=app, node distance=5.5cm] {\textbf{AI Insight Engine}\\ \small OpenAI \& Gemini APIs};
+
+    % Connections
+    \path [line] (raw) -- (loader);
+    \path [line] (loader) -- (relational);
+    \path [line] (relational) -- (app);
+    \path [line] (theme) -- (app);
+    \path [line] (app) -- (ai);
+    \path [line] (ai) -- (app);
+\end{tikzpicture}
+\end{center}
+
+% --- Section: Normalization & Fuzzy Ingestion ---
+\section{Data Normalization \& Ingestion Pipeline}
+To support files edited by different teams, the ingestion script uses regex patterns to reconcile column keys.
+
+\subsection{Fuzzy Mapping Rules}
+The loader applies a compiled list of regular expressions to inspect columns:
+\begin{itemize}
+    \item \textbf{Associate Name}: matches \texttt{\textbackslash bname\textbackslash b}, \texttt{associate.*name}, \texttt{employee.*name}.
+    \item \textbf{CARES Framework Lever}: matches \texttt{cares.*framework}, \texttt{cares.*lever}, \texttt{cares}, \texttt{framework}.
+    \item \textbf{Action Owners}: matches \texttt{action.*owner}, \texttt{owner.*action}, \texttt{assigned.*to}, \texttt{owners}.
+    \item \textbf{Observations}: matches \texttt{coverage}, \texttt{item.*coverage}, \texttt{theme}, \texttt{insight}.
+\end{itemize}
+
+\subsection{Relational Normalization}
+The process decomposes the uploaded workbook into a normalized format:
+\begin{enumerate}
+    \item \textbf{Artificial Keying}: Excel rows are mapped to a strict primary key \texttt{ID} range ($1, 2, 3 \ldots n$).
+    \item \textbf{Compound Lookup Join}: Observation records in sheet \texttt{Data\_Insight} are mapped back to parent records using a double-index lookup matching \texttt{(BHR Employee ID/Name, Date)} or the sheet row index as a fallback.
+    \item \textbf{Long-Format Decomposition}: Multivalue list fields (like multiple action owners separated by semicolons) are exploded into separate indices (\texttt{owners\_long}) to prevent duplicate rows.
+\end{enumerate}
+
+% --- Section: Mathematical Modeling ---
+\section{Mathematical Modeling: Composite Risk Score}
+Each associate connect session is assigned a composite risk score to measure urgency.
+
+\subsection{The Formula}
+The risk metric is computed as a weighted summation:
+\begin{equation}
+    R = W_{\text{severity}} + W_{\text{status}} + W_{\text{sentiment}} + W_{\text{age}}
+\end{equation}
+where the maximum potential score is $R_{\text{max}} = 100$.
+
+\subsection{Weight Assigments}
+\begin{enumerate}
+    \item \textbf{Severity Weight} ($W_{\text{severity}} \in \{6, 22, 45\}$):
+        \begin{equation}
+            W_{\text{severity}} = 
+            \begin{cases} 
+                45 & \text{if High/Critical} \\
+                22 & \text{if Moderate/Medium} \\
+                6  & \text{if Low/Minor} \\
+                10 & \text{otherwise}
+            \end{cases}
+        \end{equation}
+    \item \textbf{Status Weight} ($W_{\text{status}} \in \{0, 14, 30\}$):
+        \begin{equation}
+            W_{\text{status}} = 
+            \begin{cases} 
+                30 & \text{if Open/New} \\
+                14 & \text{if In-progress/Active} \\
+                0  & \text{if Closed/Resolved}
+            \end{cases}
+        \end{equation}
+    \item \textbf{Sentiment Weight} ($W_{\text{sentiment}} \in \{0, 3, 8, 15\}$):
+        \begin{equation}
+            W_{\text{sentiment}} = 
+            \begin{cases} 
+                15 & \text{if Negative/Poor} \\
+                8  & \text{if Mixed} \\
+                3  & \text{if Neutral} \\
+                0  & \text{if Positive}
+            \end{cases}
+        \end{equation}
+    \item \textbf{Age Penalty Weight} ($W_{\text{age}} \in [0, 10]$):
+        Calculated only for unresolved statuses (Open or In-progress) to track compliance:
+        \begin{equation}
+            W_{\text{age}} = 
+            \begin{cases}
+                \min\left(10, \dfrac{\text{Days Since Connect}}{10}\right) & \text{if Status } \neq \text{Closed} \\
+                0 & \text{if Status } = \text{Closed}
+            \end{cases}
+        \end{equation}
+\end{enumerate}
+
+% --- Section: Design System ---
+\section{Design System Guidelines}
+The styling definitions implemented in \texttt{theme.py} follow Tech Mahindra's official layout guidelines, employing a strict \textbf{60-30-10 color split}:
+
+\begin{table}[h]
+\centering
+\caption{Brand Styling Parameters}
+\label{tab:colors}
+\begin{tabular}{@{}llp{8cm}@{}}
+\toprule
+\textbf{Proportion} & \textbf{Hex Code} & \textbf{UI Element / Architectural Purpose} \\ \bottomrule
+\textbf{60\% Warm Neutrals}  & \texttt{\#F6F2EA} / \texttt{\#FFFFFF} & Core application canvas, main panel grids, and card backgrounds. \\
+\textbf{30\% Anchors}         & \texttt{\#0A0838} / \texttt{\#4A453D} & Headers, navigation blocks, and sidebar control panels. \\
+\textbf{10\% Mahindra Red}    & \texttt{\#E31837}                     & High-priority metrics, warning messages, and active button highlights. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Typography Guidelines}
+\begin{itemize}
+    \item \textbf{Display Font}: \textit{Newsreader} (Serif) is used for headers to establish an elegant, premium look.
+    \item \textbf{Body Font}: \textit{Inter} (Sans-serif) handles interface copy, tags, and charts.
+    \item \textbf{Monospace Font}: \textit{IBM Plex Mono} renders numeric figures, date indicators, and code values.
+\end{itemize}
+
+% --- Section: Implementation Guide ---
+\section{Implementation \& Compilation}
+
+To build and launch the console environment locally, configure the prerequisites:
+
+\subsection{Prerequisites Installation}
+The application runs on Python 3.8+. Install required dependencies:
+\begin{lstlisting}[language=bash]
+pip install streamlit pandas plotly openpyxl
+\end{lstlisting}
+
+\subsection{Server Inception}
+Launch the web app directly from the terminal root:
+\begin{lstlisting}[language=bash]
+cd "C:\Users\profe\Downloads\HR P"
+streamlit run app.py
+\end{lstlisting}
+
+\end{document}

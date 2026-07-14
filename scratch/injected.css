@@ -1,0 +1,1024 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+    --ink: #231F20; --ink-soft: #4A453D; --paper: #F6F2EA; --card: #FFFFFF;
+    --line: #E5DFD3; --muted: #4D4D4F; --brand: #E31837; --brand-deep: #5F0229;
+    --brand-tint: #FDE8EC; --gold: #B5832E; --gold-tint: #F5E4B8;
+    --sage: #2D6A4F; --sage-tint: #DDECE6; --navy: #0A0838;
+    --sidebar-bg: #0A0838; --sidebar-border: #4A453D;
+}
+
+html, body, [class*="css"] { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--ink); background: var(--paper); font-size: 15px; line-height: 1.6; }
+.stApp { background: linear-gradient(180deg, #F6F2EA 0%, #EBE5DA 100%); color: var(--ink); }
+
+/* ── Typographic scale ─────────────────────────────────────────────────── */
+:root {
+    /* Type ramp — fluid sizing with clamp() */
+    --fs-hero:    clamp(1.5rem,  2.2vw, 1.85rem);   /* hero banner title  */
+    --fs-h1:      clamp(1.35rem, 1.9vw, 1.6rem);    /* page section title */
+    --fs-h2:      clamp(1.1rem,  1.5vw, 1.25rem);   /* chart group header */
+    --fs-h3:      clamp(0.95rem, 1.2vw, 1.05rem);   /* chart title / sub  */
+    --fs-h4:      clamp(0.88rem, 1.1vw, 0.95rem);   /* card / row title   */
+    --fs-body:    0.9375rem;                          /* 15px base          */
+    --fs-small:   0.8125rem;                          /* 13px captions      */
+    --fs-label:   0.75rem;                            /* 12px eyebrow/tag   */
+    --fs-mono:    0.8125rem;                          /* 13px mono          */
+
+    /* Weights */
+    --fw-display:  600;
+    --fw-bold:     700;
+    --fw-medium:   500;
+    --fw-regular:  400;
+
+    /* Leading */
+    --lh-tight:   1.25;
+    --lh-snug:    1.45;
+    --lh-normal:  1.6;
+    --lh-relaxed: 1.75;
+
+    /* Tracking */
+    --ls-tight:   -0.02em;
+    --ls-normal:  -0.01em;
+    --ls-wide:     0.04em;
+    --ls-wider:    0.08em;
+    --ls-widest:   0.14em;
+}
+
+/* ── Heading hierarchy ────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Newsreader', Georgia, serif !important;
+    color: var(--ink) !important;
+    letter-spacing: var(--ls-tight) !important;
+    line-height: var(--lh-tight) !important;
+    margin-top: 0 !important;
+}
+h1 { font-size: var(--fs-h1) !important; font-weight: var(--fw-display) !important; margin-bottom: 0.5rem !important; }
+h2 { font-size: var(--fs-h2) !important; font-weight: var(--fw-display) !important; margin-bottom: 0.4rem !important; }
+h3 { font-size: var(--fs-h3) !important; font-weight: var(--fw-medium)  !important; margin-bottom: 0.3rem !important; }
+h4 { font-size: var(--fs-h4) !important; font-weight: var(--fw-medium)  !important; margin-bottom: 0.25rem !important; letter-spacing: var(--ls-normal) !important; }
+h5, h6 { font-size: var(--fs-small) !important; font-weight: var(--fw-medium) !important; letter-spacing: var(--ls-wide) !important; text-transform: uppercase !important; }
+
+/* Streamlit injects markdown h4 as chart/section titles — standardise */
+div[data-testid="stMarkdownContainer"] h4 {
+    font-family: 'Newsreader', Georgia, serif !important;
+    font-size: var(--fs-h3) !important;
+    font-weight: var(--fw-display) !important;
+    color: var(--ink) !important;
+    letter-spacing: var(--ls-tight) !important;
+    line-height: var(--lh-snug) !important;
+    margin-bottom: 0.6rem !important;
+    padding-bottom: 6px !important;
+    border-bottom: 2px solid var(--line) !important;
+}
+
+/* ── Body text & prose ────────────────────────────────────────────────── */
+p, li, td, th {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-body) !important;
+    line-height: var(--lh-normal) !important;
+    color: var(--ink) !important;
+}
+.stMarkdown p { margin-bottom: 0.5rem !important; }
+
+/* Streamlit captions */
+div[data-testid="stCaptionContainer"] p,
+.stCaption, small {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-small) !important;
+    color: var(--muted) !important;
+    line-height: var(--lh-snug) !important;
+}
+
+/* Metric values */
+[data-testid="stMetricValue"] {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace !important;
+    font-size: clamp(1.4rem, 2vw, 1.8rem) !important;
+    font-weight: var(--fw-display) !important;
+    color: var(--ink) !important;
+    letter-spacing: var(--ls-tight) !important;
+}
+[data-testid="stMetricLabel"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-label) !important;
+    font-weight: var(--fw-medium) !important;
+    color: var(--muted) !important;
+    letter-spacing: var(--ls-wide) !important;
+    text-transform: uppercase !important;
+}
+[data-testid="stMetricDelta"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-small) !important;
+}
+
+/* Tab labels */
+button[data-baseweb="tab"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-small) !important;
+    font-weight: var(--fw-medium) !important;
+    letter-spacing: var(--ls-wide) !important;
+    text-transform: uppercase !important;
+}
+
+/* Data table */
+div[data-testid="stDataFrame"] th {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-label) !important;
+    font-weight: var(--fw-medium) !important;
+    letter-spacing: var(--ls-wide) !important;
+    text-transform: uppercase !important;
+    color: var(--muted) !important;
+}
+div[data-testid="stDataFrame"] td {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-small) !important;
+}
+
+/* Widget labels — sidebar + main */
+label, [data-testid="stWidgetLabel"] p {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: var(--fs-small) !important;
+    font-weight: var(--fw-medium) !important;
+    letter-spacing: var(--ls-normal) !important;
+}
+
+
+#MainMenu, footer { visibility: hidden; height: 0; }
+[data-testid="stHeader"] {
+    background: transparent !important;
+}
+/* Hide only Deploy and Main Menu buttons in header, leaving the collapse/reopen toggle visible */
+[data-testid="stHeader"] button[data-testid="stBaseButton-header"],
+[data-testid="stHeader"] button[data-testid="stMainMenuButton"] {
+    display: none !important;
+}
+.block-container { padding-top: 0rem !important; padding-bottom: 3rem !important; max-width: 1320px; }
+
+/* Page hero */
+.voa-hero {
+    background: linear-gradient(135deg, #0A0838 0%, #29251D 72%);
+    border-radius: 0 0 12px 12px; padding: 22px 28px 20px; margin: 0rem -2rem 1.5rem -2rem;
+    border-bottom: 3px solid var(--brand); box-shadow: 0 12px 28px rgba(10, 8, 56, 0.12);
+}
+.voa-hero .title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: var(--fs-hero);
+    font-weight: var(--fw-display);
+    letter-spacing: var(--ls-tight);
+    line-height: var(--lh-tight);
+    color: white;
+    margin: 0;
+}
+.voa-hero .subtitle {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #E5DFD3;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-snug);
+    margin-top: 6px;
+    letter-spacing: var(--ls-normal);
+}
+.voa-hero .nav-chip {
+    display: inline-block; margin-top: 10px; padding: 4px 12px; border-radius: 999px;
+    background: rgba(227, 24, 55, 0.18); border: 1px solid rgba(227, 24, 55, 0.45);
+    color: #fff;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    font-weight: var(--fw-medium);
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: var(--sidebar-bg) !important;
+    border-right: 1px solid var(--sidebar-border) !important;
+}
+
+/* Eliminate any horizontal scroll in sidebar */
+section[data-testid="stSidebar"] * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Scale and fit the inner user content container */
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"],
+section[data-testid="stSidebar"] .stSidebarUserContent,
+div[data-testid="stSidebarUserContent"] {
+    padding: 0rem 0.5rem 1.5rem 0.5rem !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+
+/* Force radio labels text wrapping and white color inside sidebar */
+section[data-testid="stSidebar"] [data-baseweb="radio"] label,
+section[data-testid="stSidebar"] [data-baseweb="radio"] label *,
+section[data-testid="stSidebar"] div[data-testid="stRadio"] *,
+section[data-testid="stSidebar"] div[data-testid="stRadio"] label {
+    white-space: normal !important;
+    word-break: break-word !important;
+    font-size: 15.5px !important;
+    line-height: 1.4 !important;
+    color: #F8FAFC !important;
+}
+
+/* Reduce margin/padding of the radio widget list to prevent horizontal scroll */
+section[data-testid="stSidebar"] div[data-testid="stRadio"],
+section[data-testid="stSidebar"] [role="radiogroup"],
+section[data-testid="stSidebar"] [data-baseweb="radio"] {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Main content layout (dynamic) */
+section[data-testid="stMain"],
+section.main {
+    flex-grow: 1 !important;
+}
+
+/* Color only the text inside the sidebar */
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] .stMarkdown,
+section[data-testid="stSidebar"] .stCaption,
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    color: #F8FAFC !important;
+}
+
+/* ── Sidebar: File uploader — force dark theme cross-browser (Chrome + Firefox) ── */
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"],
+section[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 8px !important;
+}
+
+/* All text inside the dropzone — light so legible on dark bg */
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] *,
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] p,
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] span,
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] small {
+    color: #C8C4BC !important;
+}
+
+/* Upload button inside sidebar dropzone */
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] button,
+section[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] button {
+    background-color: rgba(255, 255, 255, 0.10) !important;
+    color: #F8FAFC !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    border-radius: 6px !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] button:hover {
+    background-color: rgba(227, 24, 55, 0.22) !important;
+    border-color: rgba(227, 24, 55, 0.5) !important;
+}
+
+/* ── Sidebar: Expander — force dark theme cross-browser ── */
+section[data-testid="stSidebar"] div[data-testid="stExpander"],
+section[data-testid="stSidebar"] [data-testid="stExpander"] {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 8px !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stExpander"] summary,
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    color: #F8FAFC !important;
+    min-height: max(2.75rem, 3.45vw) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 14px !important;
+    box-sizing: border-box !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stExpander"] summary:hover {
+    background-color: rgba(255, 255, 255, 0.13) !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stExpander"] summary span,
+section[data-testid="stSidebar"] div[data-testid="stExpander"] summary p,
+section[data-testid="stSidebar"] div[data-testid="stExpander"] summary svg {
+    color: #F8FAFC !important;
+    fill: #F8FAFC !important;
+}
+
+/* Style sidebar collapse toggle button (inside sidebar when expanded) */
+section[data-testid="stSidebar"] button[data-testid="stBaseButton-headerNoPadding"],
+div[data-testid="collapsedControl"] button,
+div[data-testid="stSidebarCollapseButton"] button {
+    display: inline-flex !important;
+    visibility: visible !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 6px !important;
+    color: #FFFFFF !important;
+    width: 32px !important;
+    height: 32px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+    transition: background-color 0.15s ease !important;
+}
+section[data-testid="stSidebar"] button[data-testid="stBaseButton-headerNoPadding"]:hover,
+div[data-testid="collapsedControl"] button:hover,
+div[data-testid="stSidebarCollapseButton"] button:hover {
+    background-color: rgba(255, 255, 255, 0.18) !important;
+}
+section[data-testid="stSidebar"] button[data-testid="stBaseButton-headerNoPadding"] span,
+section[data-testid="stSidebar"] button[data-testid="stBaseButton-headerNoPadding"] [data-testid="stIconMaterial"],
+div[data-testid="collapsedControl"] button span,
+div[data-testid="stSidebarCollapseButton"] button span {
+    color: #FFFFFF !important;
+    fill: #FFFFFF !important;
+}
+
+/* Style reopen button (when collapsed) in main area header */
+[data-testid="stHeader"] button[data-testid="stExpandSidebarButton"],
+[data-testid="stHeader"] button[data-testid="stBaseButton-headerNoPadding"],
+[data-testid="stHeader"] div[data-testid="collapsedControl"] button,
+[data-testid="stHeader"] div[data-testid="stSidebarCollapseButton"] button {
+    display: inline-flex !important;
+    visibility: visible !important;
+    background-color: #0A0838 !important; /* Contrasting navy background */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+    color: #FFFFFF !important;
+    width: 32px !important;
+    height: 32px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+    box-shadow: 0 2px 8px rgba(10, 8, 56, 0.2) !important;
+    transition: background-color 0.15s ease !important;
+    position: absolute !important;
+    left: 12px !important;
+    top: 12px !important;
+    z-index: 999999 !important;
+}
+[data-testid="stHeader"] button[data-testid="stExpandSidebarButton"]:hover,
+[data-testid="stHeader"] button[data-testid="stBaseButton-headerNoPadding"]:hover,
+[data-testid="stHeader"] div[data-testid="collapsedControl"] button:hover,
+[data-testid="stHeader"] div[data-testid="stSidebarCollapseButton"] button:hover {
+    background-color: #E31837 !important; /* Turns red on hover */
+}
+[data-testid="stHeader"] button[data-testid="stExpandSidebarButton"] span,
+[data-testid="stHeader"] button[data-testid="stExpandSidebarButton"] [data-testid="stIconMaterial"],
+[data-testid="stHeader"] button[data-testid="stBaseButton-headerNoPadding"] span,
+[data-testid="stHeader"] button[data-testid="stBaseButton-headerNoPadding"] [data-testid="stIconMaterial"],
+[data-testid="stHeader"] div[data-testid="collapsedControl"] button span,
+[data-testid="stHeader"] div[data-testid="stSidebarCollapseButton"] button span {
+    color: #FFFFFF !important;
+    fill: #FFFFFF !important;
+}
+
+section[data-testid="stSidebar"] hr { border-color: rgba(255,255,255,0.14); }
+section[data-testid="stSidebar"] [data-baseweb="radio"] label {
+    padding: 8px 10px; border-radius: 6px; transition: background 0.15s ease;
+}
+section[data-testid="stSidebar"] [data-baseweb="radio"] label:hover {
+    background: rgba(255,255,255,0.06);
+}
+section[data-testid="stSidebar"] [data-baseweb="radio"] input:checked ~ div {
+    background: rgba(227, 24, 55, 0.22) !important;
+}
+
+/* ── Sidebar inputs: uniform beige background + high-contrast dark text ── */
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] > div,
+section[data-testid="stSidebar"] div[data-testid="stTextInput"] [data-baseweb="input"] > div,
+section[data-testid="stSidebar"] div[data-testid="stDateInput"] [data-baseweb="input"] > div,
+section[data-testid="stSidebar"] div[data-testid="stNumberInput"] [data-baseweb="input"] > div {
+    min-height: 30px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-left: 8px !important;
+    background-color: #EBE5DA !important;
+    color: #231F20 !important;
+    border: 1px solid rgba(74, 69, 61, 0.35) !important;
+    border-radius: 6px !important;
+}
+
+/* Sidebar input text, value and placeholder text — dark for legibility on beige */
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] div,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] span,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] [data-baseweb="value"],
+section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] div,
+section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] span,
+section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="tag"] {
+    background-color: #EBE5DA !important;
+    color: #231F20 !important;
+    font-size: 13.5px !important;
+}
+
+/* Sidebar actual <input> and <textarea> elements */
+section[data-testid="stSidebar"] input,
+section[data-testid="stSidebar"] textarea {
+    background-color: #EBE5DA !important;
+    color: #231F20 !important;
+    font-size: 13.5px !important;
+}
+
+/* Sidebar placeholder text — contrast-safe muted dark on beige */
+section[data-testid="stSidebar"] input::placeholder,
+section[data-testid="stSidebar"] textarea::placeholder {
+    color: #4A453D !important;
+    opacity: 1 !important;
+}
+
+/* Sidebar select placeholder / no-value state */
+section[data-testid="stSidebar"] [data-baseweb="select"] [aria-placeholder],
+section[data-testid="stSidebar"] [data-baseweb="select"] [data-value=""],
+section[data-testid="stSidebar"] [data-baseweb="select"] > div > div:first-child {
+    color: #4A453D !important;
+}
+
+/* Sidebar multiselect tag chips */
+section[data-testid="stSidebar"] [data-baseweb="tag"] {
+    background-color: #29251D !important;
+    color: #F8FAFC !important;
+}
+section[data-testid="stSidebar"] [data-baseweb="tag"] span {
+    color: #F8FAFC !important;
+}
+
+/* Sidebar select caret/arrow icon — dark so visible on beige */
+section[data-testid="stSidebar"] [data-baseweb="select"] svg {
+    fill: #231F20 !important;
+    color: #231F20 !important;
+}
+
+.voa-eyebrow {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    font-weight: var(--fw-display);
+    color: var(--brand);
+    margin-bottom: 4px;
+    line-height: var(--lh-snug);
+}
+.voa-eyebrow.on-dark { color: #F8B4A3; }
+
+/* KPI cards */
+.voa-kpi {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; height: 100%; box-shadow: 0 2px 8px rgba(35, 31, 32, 0.04);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.voa-kpi:hover { box-shadow: 0 6px 16px rgba(35, 31, 32, 0.08); transform: translateY(-1px); }
+.voa-kpi .label {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: var(--fw-medium);
+}
+.voa-kpi .value {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+    font-weight: var(--fw-display);
+    color: var(--ink);
+    line-height: var(--lh-tight);
+    margin-top: 4px;
+    letter-spacing: var(--ls-tight);
+}
+.voa-kpi .sub {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: var(--fs-small);
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: var(--lh-snug);
+}
+.voa-kpi.accent-brand { border-left: 4px solid var(--brand); }
+.voa-kpi.accent-gold  { border-left: 4px solid var(--gold);  }
+.voa-kpi.accent-sage  { border-left: 4px solid var(--sage);  }
+.voa-kpi.accent-ink   { border-left: 4px solid var(--navy);  }
+
+.voa-callout {
+    background: var(--brand-tint); border: 1px solid rgba(227, 24, 55, 0.18); border-left: 4px solid var(--brand);
+    border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: var(--fs-body);
+    line-height: var(--lh-relaxed);
+    color: var(--ink);
+}
+.voa-callout.tone-gold { background: #F5E4B8; border-color: rgba(181, 131, 46, 0.25); border-left-color: var(--gold); }
+.voa-callout.tone-sage { background: #DDECE6; border-color: rgba(45, 106, 79, 0.2); border-left-color: var(--sage); }
+
+.voa-pill {
+    display: inline-block; padding: 2px 9px; border-radius: 100px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: var(--fs-label);
+    font-weight: var(--fw-display);
+    letter-spacing: var(--ls-wide);
+    margin-right: 4px;
+    text-transform: uppercase;
+}
+.voa-pill.sev-High { background: var(--brand-tint); color: var(--brand-deep); }
+.voa-pill.sev-Moderate { background: var(--gold-tint); color: #7A5A22; }
+.voa-pill.sev-Low { background: var(--sage-tint); color: #275038; }
+.voa-pill.st-Open { background: var(--brand-tint); color: var(--brand-deep); }
+.voa-pill.st-In-progress { background: var(--gold-tint); color: #7A5A22; }
+.voa-pill.st-Closed { background: var(--sage-tint); color: #275038; }
+
+.voa-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(35, 31, 32, 0.04);
+}
+.voa-card .title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: var(--fw-display);
+    font-size: var(--fs-h4);
+    margin-bottom: 4px;
+    letter-spacing: var(--ls-normal);
+    line-height: var(--lh-snug);
+}
+.voa-card .meta {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: var(--fs-small);
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: var(--lh-snug);
+}
+.voa-quote {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: var(--fs-small);
+    line-height: var(--lh-relaxed);
+    border-left: 2px solid var(--brand);
+    padding-left: 10px;
+    margin-top: 6px;
+}
+
+.voa-filter-bar {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 1rem;
+    padding: 10px 14px; background: #FFFFFF; border: 1px solid var(--line); border-radius: 8px;
+}
+.voa-filter-chip {
+    display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px;
+    background: #F6F2EA; border: 1px solid var(--line); color: var(--ink-soft);
+}
+
+.stButton>button, .stDownloadButton>button {
+    background: var(--navy); color: white; border: none; border-radius: 6px;
+    font-weight: 600; letter-spacing: 0.02em; transition: background 0.15s ease;
+}
+.stButton>button:hover, .stDownloadButton>button:hover { background: var(--brand); color: white; }
+.stButton>button[kind="secondary"] {
+    background: transparent !important; color: var(--ink) !important;
+    border: 1px solid var(--line) !important;
+}
+
+/* ── Autocomplete suggestion chips in sidebar ── */
+section[data-testid="stSidebar"] div[data-testid^="stButton-sugg_"] > button,
+section[data-testid="stSidebar"] div[data-testid*="sugg_"] > button {
+    background: rgba(255,255,255,0.07) !important;
+    color: #E8E4DE !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    border-radius: 6px !important;
+    font-size: 12.5px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.01em !important;
+    padding: 4px 10px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    transition: background 0.12s ease, border-color 0.12s ease !important;
+}
+section[data-testid="stSidebar"] div[data-testid^="stButton-sugg_"] > button:hover,
+section[data-testid="stSidebar"] div[data-testid*="sugg_"] > button:hover {
+    background: rgba(227,24,55,0.18) !important;
+    border-color: rgba(227,24,55,0.40) !important;
+    color: #F8FAFC !important;
+}
+
+/* ── Nav tile buttons in sidebar ── */
+div[class*="st-key-nav_btn_"] button {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: max(2.75rem, 3.45vw) !important;
+    padding: 0 14px !important;
+    margin-bottom: 4px !important;
+    border-radius: 7px !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    transition: background 0.14s ease, border-color 0.14s ease !important;
+    border: 1px solid transparent !important;
+}
+
+/* Inactive nav tiles */
+div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-secondary"] {
+    background: rgba(255,255,255,0.05) !important;
+    color: rgba(248,250,252,0.78) !important;
+    border-color: rgba(255,255,255,0.10) !important;
+}
+div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-secondary"]:hover {
+    background: #EBE5DA !important;
+    border-color: #EBE5DA !important;
+    color: #231F20 !important;
+}
+
+/* Active nav tile (primary) */
+div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"] {
+    background: #E31837 !important;
+    color: #FFFFFF !important;
+    border-color: #E31837 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(227,24,55,0.30) !important;
+}
+div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"]:hover {
+    background: #EBE5DA !important;
+    border-color: #EBE5DA !important;
+    color: #231F20 !important;
+    box-shadow: none !important;
+}
+
+/* Remove the default stButton margin so tiles are tight */
+section[data-testid="stSidebar"] div[class*="st-key-nav_btn_"],
+section[data-testid="stSidebar"] div[data-testid^="stButton-nav_btn_"] {
+    margin-bottom: 0 !important;
+}
+
+button[data-baseweb="tab"] { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 600; color: var(--muted); }
+button[data-baseweb="tab"][aria-selected="true"] { color: var(--brand) !important; }
+div[data-baseweb="tab-highlight"] { background-color: var(--brand) !important; }
+
+[data-testid="stMetricValue"] { font-family: 'IBM Plex Mono', ui-monospace, monospace; color: var(--ink); }
+hr { border-color: var(--line); }
+
+/* ── Sliders ──────────────────────────────────────────────────────────── */
+div[data-testid="stSlider"] label,
+div[data-testid="stSlider"] p {
+    color: #1b4332 !important;
+    font-weight: 600 !important;
+}
+div[data-testid="stSlider"] [role="slider"] {
+    background-color: #2D6A4F !important;
+    border-color: #2D6A4F !important;
+    box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.2) !important;
+}
+div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {
+    background: #2D6A4F !important;
+}
+div[data-testid="stSlider"] [data-baseweb="slider"] div {
+    color: #1b4332 !important;
+}
+
+/* ── Text & Widget Readability (Forces light theme contrast in main area) ── */
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-baseweb="input"] > div,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-baseweb="select"] > div,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-baseweb="base-input"] > div,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stTextInput"] input,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stTextArea"] textarea,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stSelectbox"] select,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stDateInput"] input {
+    background-color: #FFFFFF !important;
+    color: #231F20 !important;
+    border: 1px solid #E5DFD3 !important;
+}
+
+/* For selectbox and multiselect selection containers */
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stSelectbox"] [data-baseweb="select"] div,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stSelectbox"] [data-baseweb="select"] span,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stSelectbox"] [role="button"],
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stSelectbox"] [role="combobox"],
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stMultiSelect"] [data-baseweb="select"] div,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stMultiSelect"] [data-baseweb="select"] span {
+    background-color: #FFFFFF !important;
+    color: #231F20 !important;
+}
+
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] input,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] textarea,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] select {
+    color: #231F20 !important;
+}
+
+/* Dropdowns/menus when selecting options */
+div[role="listbox"],
+div[data-baseweb="menu"],
+div[data-baseweb="popover"] {
+    background-color: #FFFFFF !important;
+    color: #231F20 !important;
+}
+div[role="listbox"] li,
+div[role="listbox"] div,
+div[data-baseweb="menu"] li,
+div[data-baseweb="menu"] div {
+    color: #231F20 !important;
+}
+div[role="listbox"] li:hover,
+div[data-baseweb="menu"] li:hover {
+    background-color: #F6F2EA !important;
+}
+
+/* Expanders */
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E5DFD3 !important;
+    border-radius: 8px !important;
+}
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] summary {
+    background-color: #FFFFFF !important;
+    color: #231F20 !important;
+}
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] summary:hover {
+    background-color: #F6F2EA !important;
+}
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] summary span,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] summary p {
+    color: #231F20 !important;
+}
+
+/* Radio label & radio options in main content */
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stRadio"] label,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stRadio"] p,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stRadio"] span {
+    color: #231F20 !important;
+}
+
+/* Standard text labels above form fields */
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] label,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-testid="stWidgetLabel"] p {
+    color: #4A453D !important;
+    font-weight: 600 !important;
+}
+
+
+/* ── overview icon ── */
+div.st-key-nav_btn_overview button::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjciIGhlaWdodD0iOSIgcng9IjEiIC8+CiAgPHJlY3QgeD0iMTQiIHk9IjMiIHdpZHRoPSI3IiBoZWlnaHQ9IjUiIHJ4PSIxIiAvPgogIDxyZWN0IHg9IjE0IiB5PSIxMiIgd2lkdGg9IjciIGhlaWdodD0iOSIgcng9IjEiIC8+CiAgPHJlY3QgeD0iMyIgeT0iMTYiIHdpZHRoPSI3IiBoZWlnaHQ9IjUiIHJ4PSIxIiAvPgo8L3N2Zz4K') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 16px !important;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: background-color 0.14s ease, background-image 0.14s ease;
+}
+div.st-key-nav_btn_overview button[data-testid="stBaseButton-primary"]::before {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+div.st-key-nav_btn_overview button:hover::before {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjMxRjIwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjciIGhlaWdodD0iOSIgcng9IjEiIC8+CiAgPHJlY3QgeD0iMTQiIHk9IjMiIHdpZHRoPSI3IiBoZWlnaHQ9IjUiIHJ4PSIxIiAvPgogIDxyZWN0IHg9IjE0IiB5PSIxMiIgd2lkdGg9IjciIGhlaWdodD0iOSIgcng9IjEiIC8+CiAgPHJlY3QgeD0iMyIgeT0iMTYiIHdpZHRoPSI3IiBoZWlnaHQ9IjUiIHJ4PSIxIiAvPgo8L3N2Zz4K') !important;
+}
+
+/* ── priority_risk icon ── */
+div.st-key-nav_btn_priority_risk button::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTEyIDIyczgtNCA4LTEwVjVsLTgtMy04IDN2N2MwIDYgOCAxMCA4IDEweiIgLz4KICA8bGluZSB4MT0iMTIiIHkxPSI4IiB4Mj0iMTIiIHkyPSIxMiIgLz4KICA8bGluZSB4MT0iMTIiIHkxPSIxNiIgeDI9IjEyLjAxIiB5Mj0iMTYiIC8+Cjwvc3ZnPgo=') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 16px !important;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: background-color 0.14s ease, background-image 0.14s ease;
+}
+div.st-key-nav_btn_priority_risk button[data-testid="stBaseButton-primary"]::before {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+div.st-key-nav_btn_priority_risk button:hover::before {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjMxRjIwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTEyIDIyczgtNCA4LTEwVjVsLTgtMy04IDN2N2MwIDYgOCAxMCA4IDEweiIgLz4KICA8bGluZSB4MT0iMTIiIHkxPSI4IiB4Mj0iMTIiIHkyPSIxMiIgLz4KICA8bGluZSB4MT0iMTIiIHkxPSIxNiIgeDI9IjEyLjAxIiB5Mj0iMTYiIC8+Cjwvc3ZnPgo=') !important;
+}
+
+/* ── coverage_themes icon ── */
+div.st-key-nav_btn_coverage_themes button::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTEyIDJIMnYxMGw5IDkgMTAtMTAtOS05eiIgLz4KICA8Y2lyY2xlIGN4PSI2IiBjeT0iNiIgcj0iMSIgLz4KICA8cGF0aCBkPSJNOSAxOGw3LTctNy03IiBvcGFjaXR5PSIwLjc1IiAvPgo8L3N2Zz4K') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 16px !important;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: background-color 0.14s ease, background-image 0.14s ease;
+}
+div.st-key-nav_btn_coverage_themes button[data-testid="stBaseButton-primary"]::before {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+div.st-key-nav_btn_coverage_themes button:hover::before {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjMxRjIwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTEyIDJIMnYxMGw5IDkgMTAtMTAtOS05eiIgLz4KICA8Y2lyY2xlIGN4PSI2IiBjeT0iNiIgcj0iMSIgLz4KICA8cGF0aCBkPSJNOSAxOGw3LTctNy03IiBvcGFjaXR5PSIwLjc1IiAvPgo8L3N2Zz4K') !important;
+}
+
+/* ── action_center icon ── */
+div.st-key-nav_btn_action_center button::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTE2IDRoMmEyIDIgMCAwIDEgMiAydjE0YTIgMiAwIDAgMS0yIDJINmEyIDIgMCAwIDEtMi0yVjZhMiAyIDAgMCAxIDItMmgyIiAvPgogIDxyZWN0IHg9IjgiIHk9IjIiIHdpZHRoPSI4IiBoZWlnaHQ9IjQiIHJ4PSIxIiByeT0iMSIgLz4KICA8cGF0aCBkPSJNOSAxNGwyIDIgNC00IiAvPgo8L3N2Zz4K') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 16px !important;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: background-color 0.14s ease, background-image 0.14s ease;
+}
+div.st-key-nav_btn_action_center button[data-testid="stBaseButton-primary"]::before {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+div.st-key-nav_btn_action_center button:hover::before {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjMxRjIwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTE2IDRoMmEyIDIgMCAwIDEgMiAydjE0YTIgMiAwIDAgMS0yIDJINmEyIDIgMCAwIDEtMi0yVjZhMiAyIDAgMCAxIDItMmgyIiAvPgogIDxyZWN0IHg9IjgiIHk9IjIiIHdpZHRoPSI4IiBoZWlnaHQ9IjQiIHJ4PSIxIiByeT0iMSIgLz4KICA8cGF0aCBkPSJNOSAxNGwyIDIgNC00IiAvPgo8L3N2Zz4K') !important;
+}
+
+/* ── insight_library icon ── */
+div.st-key-nav_btn_insight_library button::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTQgMTkuNUEyLjUgMi41IDAgMCAxIDYuNSAxN0gyMCIgLz4KICA8cGF0aCBkPSJNNi41IDJIMjB2MjBINi41QTIuNSAyLjUgMCAwIDEgNCAxOS41di0xNUEyLjUgMi41IDAgMCAxIDYuNSAyeiIgLz4KPC9zdmc+Cg==') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 16px !important;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: background-color 0.14s ease, background-image 0.14s ease;
+}
+div.st-key-nav_btn_insight_library button[data-testid="stBaseButton-primary"]::before {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+div.st-key-nav_btn_insight_library button:hover::before {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjMxRjIwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTQgMTkuNUEyLjUgMi41IDAgMCAxIDYuNSAxN0gyMCIgLz4KICA8cGF0aCBkPSJNNi41IDJIMjB2MjBINi41QTIuNSAyLjUgMCAwIDEgNCAxOS41di0xNUEyLjUgMi41IDAgMCAxIDYuNSAyeiIgLz4KPC9zdmc+Cg==') !important;
+}
+
+/* ── data_explorer icon ── */
+div.st-key-nav_btn_data_explorer button::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiByeD0iMiIgLz4KICA8bGluZSB4MT0iOSIgeTE9IjMiIHgyPSI5IiB5Mj0iMjEiIC8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMyIgeDI9IjE1IiB5Mj0iMjEiIC8+CiAgPGxpbmUgeDE9IjMiIHkxPSI5IiB4Mj0iMjEiIHkyPSI5IiAvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTUiIHgyPSIyMSIgeTI9IjE1IiAvPgo8L3N2Zz4K') !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 16px !important;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: background-color 0.14s ease, background-image 0.14s ease;
+}
+div.st-key-nav_btn_data_explorer button[data-testid="stBaseButton-primary"]::before {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+div.st-key-nav_btn_data_explorer button:hover::before {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjMxRjIwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4IiByeD0iMiIgLz4KICA8bGluZSB4MT0iOSIgeTE9IjMiIHgyPSI5IiB5Mj0iMjEiIC8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMyIgeDI9IjE1IiB5Mj0iMjEiIC8+CiAgPGxpbmUgeDE9IjMiIHkxPSI5IiB4Mj0iMjEiIHkyPSI5IiAvPgogIDxsaW5lIHgxPSIzIiB5MT0iMTUiIHgyPSIyMSIgeTI9IjE1IiAvPgo8L3N2Zz4K') !important;
+}
+
+</style>
+<script>
+(function() {
+  function applyDarkSidebarStyles() {
+    var sidebar = document.querySelector('section[data-testid="stSidebar"]');
+    if (!sidebar) return;
+
+    /* ── File uploader dropzones ── */
+    var dropzones = sidebar.querySelectorAll('[data-testid="stFileUploaderDropzone"]');
+    dropzones.forEach(function(dz) {
+      dz.style.setProperty('background-color', 'rgba(255,255,255,0.06)', 'important');
+      dz.style.setProperty('border', '1px solid rgba(255,255,255,0.18)', 'important');
+      dz.style.setProperty('border-radius', '8px', 'important');
+
+      /* All descendant text nodes */
+      dz.querySelectorAll('p, span, small, label').forEach(function(el) {
+        el.style.setProperty('color', '#C8C4BC', 'important');
+      });
+
+      /* Upload button(s) */
+      dz.querySelectorAll('button').forEach(function(btn) {
+        btn.style.setProperty('background-color', 'rgba(255,255,255,0.10)', 'important');
+        btn.style.setProperty('color', '#F8FAFC', 'important');
+        btn.style.setProperty('border', '1px solid rgba(255,255,255,0.30)', 'important');
+        btn.style.setProperty('border-radius', '6px', 'important');
+      });
+
+      /* The inner <section> wrapper Streamlit wraps around dropzone content */
+      dz.querySelectorAll('section').forEach(function(s) {
+        s.style.setProperty('background-color', 'transparent', 'important');
+      });
+    });
+
+    /* ── Expander containers (details/summary) ── */
+    var expanders = sidebar.querySelectorAll('[data-testid="stExpander"]');
+    expanders.forEach(function(exp) {
+      exp.style.setProperty('background-color', 'rgba(255,255,255,0.04)', 'important');
+      exp.style.setProperty('border', '1px solid rgba(255,255,255,0.12)', 'important');
+      exp.style.setProperty('border-radius', '8px', 'important');
+
+      /* details element */
+      exp.querySelectorAll('details').forEach(function(d) {
+        d.style.setProperty('background-color', 'transparent', 'important');
+      });
+
+      /* summary header */
+      exp.querySelectorAll('summary').forEach(function(s) {
+        s.style.setProperty('background-color', 'rgba(255,255,255,0.08)', 'important');
+        s.style.setProperty('border-radius', '8px', 'important');
+        s.style.setProperty('color', '#F8FAFC', 'important');
+        /* Expander chevron icon */
+        s.querySelectorAll('svg').forEach(function(svg) {
+          svg.style.setProperty('fill', '#F8FAFC', 'important');
+          svg.style.setProperty('color', '#F8FAFC', 'important');
+        });
+        s.querySelectorAll('p, span').forEach(function(el) {
+          el.style.setProperty('color', '#F8FAFC', 'important');
+        });
+      });
+    });
+  }
+
+  /* Run once on load */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyDarkSidebarStyles);
+  } else {
+    applyDarkSidebarStyles();
+  }
+
+  /* Run again after every DOM mutation (Streamlit re-renders) */
+  var observer = new MutationObserver(function(mutations) {
+    var shouldRun = mutations.some(function(m) {
+      return m.addedNodes.length > 0;
+    });
+    if (shouldRun) applyDarkSidebarStyles();
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  function debugSidebarCollapse() {
+    var doc = document;
+    var btn = doc.querySelector('[data-testid="collapsedControl"]');
+    var oldBtn = doc.querySelector('[data-testid="stSidebarCollapseButton"]');
+    
+    var info = "Debug: ";
+    if (btn) {
+      info += "[collapsedControl found! Tag: " + btn.tagName + ", Class: " + btn.className + ", Display: " + window.getComputedStyle(btn).display + "]";
+    } else {
+      info += "[collapsedControl NOT found] ";
+    }
+    if (oldBtn) {
+      info += "[stSidebarCollapseButton found! Tag: " + oldBtn.tagName + ", Class: " + oldBtn.className + ", Display: " + window.getComputedStyle(oldBtn).display + "]";
+    } else {
+      info += "[stSidebarCollapseButton NOT found]";
+    }
+    
+    var buttons = doc.querySelectorAll('button');
+    var btnInfo = [];
+    buttons.forEach(function(b, idx) {
+      var tid = b.getAttribute('data-testid') || '';
+      var cls = b.className || '';
+      var txt = b.innerText || b.textContent || '';
+      if (tid.includes('collapse') || tid.includes('Control') || cls.includes('collapse') || txt.toLowerCase().includes('collapse') || b.querySelector('svg')) {
+        btnInfo.push(idx + ': tid=' + tid + ' txt="' + txt.substring(0, 10) + '"');
+      }
+    });
+    info += " | Match: " + btnInfo.join("; ");
+    
+    var debugDiv = doc.getElementById('sidebar-debug-box');
+    if (!debugDiv) {
+      debugDiv = doc.createElement('div');
+      debugDiv.id = 'sidebar-debug-box';
+      debugDiv.style.cssText = 'position:fixed; bottom:10px; right:10px; background:rgba(0,0,0,0.85); color:lime; padding:10px; border-radius:5px; font-family:monospace; font-size:11px; z-index:999999; max-width:400px; word-break:break-all;';
+      doc.body.appendChild(debugDiv);
+    }
+    debugDiv.innerText = info;
+  }
+  setInterval(debugSidebarCollapse, 2000);
+})();
+</script>

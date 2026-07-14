@@ -1,0 +1,9 @@
+dataset.coverage_long shape: (316, 4)
+dataset.coverage_long cols: ['ID', 'coverage_item', 'severity', 'cares_lever']
+sessions shape: (794, 18)
+sessions cols: ['ID', 'date', 'bhr_name_canonical', 'bhr_id', 'service_line', 'ibu_scope', 'engagement_type', 'band', 'cares_lever', 'severity', 'status', 'sentiment', 'engagement_mode', 'cohort', 'engagement_query', 'action_owners', 'age_days', 'risk_score']
+dataset.coverage_long ID dtype: int64
+sessions ID dtype: Int64
+dataset.coverage_long ID sample: [1, 2, 2, 2, 3, 3, 3, 4, 5, 6]
+sessions ID sample: [1126458, 1126458, 775720, 775720, 775720, 626914, 626914, 626914, 626914, 626914]
+Overlap size: 0

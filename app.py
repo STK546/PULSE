@@ -391,7 +391,7 @@ def session_timeline(df: pd.DataFrame):
 with st.sidebar:
     logo_svg = load_logo_svg_v3("white")
     st.markdown(
-        f'<div class="voa-sidebar-logo" style="width: 160px; margin-top: -10px; margin-bottom: 24px; max-width: 100%;">{logo_svg}</div>',
+        f'<div class="voa-sidebar-logo" style="width: 200px; margin-top: -10px; margin-bottom: 24px; max-width: 100%;">{logo_svg}</div>',
         unsafe_allow_html=True,
     )
     st.markdown("<hr/>", unsafe_allow_html=True)
@@ -964,21 +964,14 @@ def view_overview():
         )
 
     _bullet_items = "".join(
-        f'<li style="margin-bottom:6px;line-height:1.6;">{b}</li>'
+        f"<li>{b}</li>"
         for b in _hurry_bullets
     )
     st.markdown(
-        f'<div style="'
-        f'background:white;border:1px solid {theme.LINE};border-left:4px solid {theme.BLUEPRINT_NAVY};'
-        f'border-radius:8px;padding:16px 20px 14px 20px;margin-bottom:1.2rem;'
-        f'box-shadow:0 2px 8px rgba(10,8,56,0.05);">'
-        f'<div style="font-family:{theme.FONT_DISPLAY};font-size:1rem;font-weight:600;'
-        f'color:{theme.BLUEPRINT_NAVY};margin-bottom:10px;letter-spacing:-0.01em;">'
-        f'Insights for people in a hurry</div>'
-        f'<ul style="margin:0;padding-left:18px;font-size:13.5px;'
-        f'color:{theme.INK};font-family:{theme.FONT_BODY};list-style-type:disc;">'
-        f'{_bullet_items}'
-        f'</ul></div>',
+        f'<div class="voa-hurry-panel">'
+        f'<div class="hurry-title">Insights for people in a hurry</div>'
+        f'<ul>{_bullet_items}</ul>'
+        f'</div>',
         unsafe_allow_html=True,
     )
     # ───────────────────────────────────────────────────────────────────────

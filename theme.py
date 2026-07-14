@@ -17,7 +17,7 @@ CLARITY_GREY_1 = "#F6F2EA"
 CLARITY_GREY_2 = "#E5DFD3"
 ANCHOR_GREY_1 = "#4A453D"
 ANCHOR_GREY_2 = "#29251D"
-BLUEPRINT_NAVY = "#0A0838"
+BLUEPRINT_NAVY = "#1E1E20"  # Rich dark charcoal replacing blue sidebar bg
 WHITE = "#FFFFFF"
 
 # Semantic aliases used across the app
@@ -36,7 +36,7 @@ GOLD = "#B5832E"
 GOLD_TINT = "#F5E4B8"
 SAGE = "#2D6A4F"
 SAGE_TINT = "#DDECE6"
-SLATE_BLUE = "#3F5F82"
+SLATE_BLUE = "#4D4D4F"      # Steel Grey replacing slate blue for cohesive branding
 
 # Updated Color Palettes based on Color Theory plan
 COLOR_RED = "#E31837"
@@ -50,7 +50,7 @@ COLOR_OCHRE = "#E9C46A"
 COLOR_TEAL = "#2A9D8F"
 COLOR_SAGE = "#2D6A4F"
 
-COLOR_SLATE_BLUE = "#3F5F82"
+COLOR_SLATE_BLUE = "#4D4D4F" # Steel Grey replacing slate blue
 COLOR_AMETHYST = "#7A5C8A"
 COLOR_STEEL = "#8D99AE"
 
@@ -214,10 +214,37 @@ div.st-key-nav_btn_{key} button:hover::before {{
     --brand-tint: {BRAND_TINT}; --gold: {GOLD}; --gold-tint: {GOLD_TINT};
     --sage: {SAGE}; --sage-tint: {SAGE_TINT}; --navy: {BLUEPRINT_NAVY};
     --sidebar-bg: {BLUEPRINT_NAVY}; --sidebar-border: {ANCHOR_GREY_1};
+    --font-display: {FONT_DISPLAY};
+    --font-body: {FONT_BODY};
+    --font-mono: {FONT_MONO};
 }}
 
-html, body, [class*="css"] {{ font-family: {FONT_BODY}; color: var(--ink); background: var(--paper); font-size: 15px; line-height: 1.6; }}
-.stApp {{ background: linear-gradient(180deg, {CLARITY_GREY_1} 0%, #EBE5DA 100%); color: var(--ink); }}
+html, body, [class*="css"] {{ font-family: var(--font-body) !important; color: var(--ink); background: var(--paper); font-size: 15px; line-height: 1.6; }}
+.stApp {{ background: radial-gradient(circle at 10% 10%, #FCFAF6 0%, #F5F1E7 100%) !important; color: var(--ink); }}
+
+/* ── Sleek custom scrollbars ── */
+::-webkit-scrollbar {{
+    width: 6px;
+    height: 6px;
+}}
+::-webkit-scrollbar-track {{
+    background: transparent;
+}}
+::-webkit-scrollbar-thumb {{
+    background: rgba(77, 77, 79, 0.15);
+    border-radius: 99px;
+}}
+::-webkit-scrollbar-thumb:hover {{
+    background: rgba(77, 77, 79, 0.3);
+}}
+
+/* Sidebar scrollbars */
+section[data-testid="stSidebar"] ::-webkit-scrollbar-thumb {{
+    background: rgba(255, 255, 255, 0.15);
+}}
+section[data-testid="stSidebar"] ::-webkit-scrollbar-thumb:hover {{
+    background: rgba(255, 255, 255, 0.3);
+}}
 
 /* ── Typographic scale ─────────────────────────────────────────────────── */
 :root {{
@@ -254,8 +281,8 @@ html, body, [class*="css"] {{ font-family: {FONT_BODY}; color: var(--ink); backg
 
 /* ── Heading hierarchy ────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {{
-    font-family: {FONT_DISPLAY} !important;
-    color: var(--ink) !important;
+    font-family: var(--font-display) !important;
+    color: var(--navy) !important;
     letter-spacing: var(--ls-tight) !important;
     line-height: var(--lh-tight) !important;
     margin-top: 0 !important;
@@ -268,20 +295,21 @@ h5, h6 {{ font-size: var(--fs-small) !important; font-weight: var(--fw-medium) !
 
 /* Streamlit injects markdown h4 as chart/section titles — standardise */
 div[data-testid="stMarkdownContainer"] h4 {{
-    font-family: {FONT_DISPLAY} !important;
+    font-family: var(--font-display) !important;
     font-size: var(--fs-h3) !important;
     font-weight: var(--fw-display) !important;
-    color: var(--ink) !important;
+    color: var(--navy) !important;
     letter-spacing: var(--ls-tight) !important;
     line-height: var(--lh-snug) !important;
-    margin-bottom: 0.6rem !important;
-    padding-bottom: 6px !important;
-    border-bottom: 2px solid var(--line) !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.8rem !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid rgba(77, 77, 79, 0.12) !important;
 }}
 
 /* ── Body text & prose ────────────────────────────────────────────────── */
 p, li, td, th {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-body) !important;
     line-height: var(--lh-normal) !important;
     color: var(--ink) !important;
@@ -291,7 +319,7 @@ p, li, td, th {{
 /* Streamlit captions */
 div[data-testid="stCaptionContainer"] p,
 .stCaption, small {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-small) !important;
     color: var(--muted) !important;
     line-height: var(--lh-snug) !important;
@@ -299,14 +327,14 @@ div[data-testid="stCaptionContainer"] p,
 
 /* Metric values */
 [data-testid="stMetricValue"] {{
-    font-family: {FONT_MONO} !important;
+    font-family: var(--font-mono) !important;
     font-size: clamp(1.4rem, 2vw, 1.8rem) !important;
     font-weight: var(--fw-display) !important;
-    color: var(--ink) !important;
+    color: var(--navy) !important;
     letter-spacing: var(--ls-tight) !important;
 }}
 [data-testid="stMetricLabel"] {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-label) !important;
     font-weight: var(--fw-medium) !important;
     color: var(--muted) !important;
@@ -314,13 +342,13 @@ div[data-testid="stCaptionContainer"] p,
     text-transform: uppercase !important;
 }}
 [data-testid="stMetricDelta"] {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-small) !important;
 }}
 
 /* Tab labels */
 button[data-baseweb="tab"] {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-small) !important;
     font-weight: var(--fw-medium) !important;
     letter-spacing: var(--ls-wide) !important;
@@ -329,7 +357,7 @@ button[data-baseweb="tab"] {{
 
 /* Data table */
 div[data-testid="stDataFrame"] th {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-label) !important;
     font-weight: var(--fw-medium) !important;
     letter-spacing: var(--ls-wide) !important;
@@ -337,13 +365,13 @@ div[data-testid="stDataFrame"] th {{
     color: var(--muted) !important;
 }}
 div[data-testid="stDataFrame"] td {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-small) !important;
 }}
 
 /* Widget labels — sidebar + main */
 label, [data-testid="stWidgetLabel"] p {{
-    font-family: {FONT_BODY} !important;
+    font-family: var(--font-body) !important;
     font-size: var(--fs-small) !important;
     font-weight: var(--fw-medium) !important;
     letter-spacing: var(--ls-normal) !important;
@@ -361,14 +389,26 @@ label, [data-testid="stWidgetLabel"] p {{
 }}
 .block-container {{ padding-top: 0rem !important; padding-bottom: 3rem !important; max-width: 1320px; }}
 
-/* Page hero */
+/* Page hero — upgraded with an elegant glowing red radial aurora */
 .voa-hero {{
-    background: linear-gradient(135deg, {BLUEPRINT_NAVY} 0%, {ANCHOR_GREY_2} 72%);
-    border-radius: 0 0 12px 12px; padding: 22px 28px 20px; margin: 0rem -2rem 1.5rem -2rem;
-    border-bottom: 3px solid var(--brand); box-shadow: 0 12px 28px rgba(10, 8, 56, 0.12);
+    background: radial-gradient(circle at 85% 50%, rgba(227, 24, 55, 0.16) 0%, transparent 60%), linear-gradient(135deg, {BLUEPRINT_NAVY} 0%, {ANCHOR_GREY_2} 100%) !important;
+    border-radius: 0 0 16px 16px; padding: 26px 32px 24px; margin: 0rem -2rem 1.8rem -2rem;
+    border-bottom: 4px solid var(--brand); box-shadow: 0 8px 30px rgba(35, 31, 32, 0.15);
+    position: relative;
+    overflow: hidden;
+}}
+.voa-hero::before {{
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(227, 24, 55, 0.15) 0%, transparent 70%);
+    pointer-events: none;
 }}
 .voa-hero .title {{
-    font-family: {FONT_DISPLAY};
+    font-family: var(--font-display);
     font-size: var(--fs-hero);
     font-weight: var(--fw-display);
     letter-spacing: var(--ls-tight);
@@ -377,26 +417,32 @@ label, [data-testid="stWidgetLabel"] p {{
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+    z-index: 1;
+    position: relative;
 }}
 .voa-hero .subtitle {{
-    font-family: {FONT_BODY};
-    color: {CLARITY_GREY_2};
+    font-family: var(--font-body);
+    color: rgba(255, 255, 255, 0.7);
     font-size: var(--fs-small);
     font-weight: var(--fw-regular);
     line-height: var(--lh-snug);
-    margin-top: 6px;
+    margin-top: 8px;
     letter-spacing: var(--ls-normal);
+    z-index: 1;
+    position: relative;
 }}
 .voa-hero .nav-chip {{
-    display: inline-block; margin-top: 10px; padding: 4px 12px; border-radius: 999px;
-    background: rgba(227, 24, 55, 0.18); border: 1px solid rgba(227, 24, 55, 0.45);
+    display: inline-block; margin-top: 12px; padding: 4px 14px; border-radius: 999px;
+    background: rgba(227, 24, 55, 0.2); border: 1px solid rgba(227, 24, 55, 0.5);
     color: #fff;
-    font-family: {FONT_MONO};
+    font-family: var(--font-mono);
     font-size: var(--fs-label);
     letter-spacing: var(--ls-wider);
     text-transform: uppercase;
     font-weight: var(--fw-medium);
+    z-index: 1;
+    position: relative;
 }}
 
 /* Cool multi-ring pulse mark beside the Pulse title */
@@ -457,6 +503,18 @@ div[data-testid="stSidebarUserContent"] {{
     overflow-x: hidden !important;
 }}
 
+/* Sidebar Logo Sizing Class */
+.voa-sidebar-logo {{
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: 200px !important;
+    transition: transform 0.25s ease-in-out !important;
+}}
+.voa-sidebar-logo:hover {{
+    transform: scale(1.03) !important;
+}}
+
 /* Force radio labels text wrapping and white color inside sidebar */
 section[data-testid="stSidebar"] [data-baseweb="radio"] label,
 section[data-testid="stSidebar"] [data-baseweb="radio"] label *,
@@ -497,12 +555,17 @@ section[data-testid="stSidebar"] h3 {{
     color: #F8FAFC !important;
 }}
 
-/* ── Sidebar: File uploader — force dark theme cross-browser (Chrome + Firefox) ── */
+/* ── Sidebar: File uploader — force dark theme ── */
 section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"],
 section[data-testid="stSidebar"] [data-testid="stFileUploaderDropzone"] {{
-    background-color: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px dashed rgba(255, 255, 255, 0.25) !important;
     border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}}
+section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"]:hover {{
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
 }}
 
 /* All text inside the dropzone — light so legible on dark bg */
@@ -526,16 +589,16 @@ section[data-testid="stSidebar"] div[data-testid="stFileUploaderDropzone"] butto
     border-color: rgba(227, 24, 55, 0.5) !important;
 }}
 
-/* ── Sidebar: Expander — force dark theme cross-browser ── */
+/* ── Sidebar: Expander — force dark theme ── */
 section[data-testid="stSidebar"] div[data-testid="stExpander"],
 section[data-testid="stSidebar"] [data-testid="stExpander"] {{
     background-color: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 8px !important;
 }}
 section[data-testid="stSidebar"] div[data-testid="stExpander"] summary,
 section[data-testid="stSidebar"] [data-testid="stExpander"] summary {{
-    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
     border-radius: 8px !important;
     color: #F8FAFC !important;
     min-height: max(2.75rem, 3.45vw) !important;
@@ -545,7 +608,7 @@ section[data-testid="stSidebar"] [data-testid="stExpander"] summary {{
     box-sizing: border-box !important;
 }}
 section[data-testid="stSidebar"] div[data-testid="stExpander"] summary:hover {{
-    background-color: rgba(255, 255, 255, 0.13) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }}
 section[data-testid="stSidebar"] div[data-testid="stExpander"] summary span,
 section[data-testid="stSidebar"] div[data-testid="stExpander"] summary p,
@@ -613,7 +676,7 @@ body.voa-sidebar-collapsed button[data-testid="stExpandSidebarButton"],
 body.voa-sidebar-collapsed [data-testid="stHeader"] button[data-testid="stExpandSidebarButton"] {{
     display: inline-flex !important;
     visibility: visible !important;
-    background-color: #0A0838 !important;
+    background-color: var(--navy) !important;  /* Charcoal black button in collapsed mode */
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
     border-radius: 6px !important;
     color: #FFFFFF !important;
@@ -622,7 +685,7 @@ body.voa-sidebar-collapsed [data-testid="stHeader"] button[data-testid="stExpand
     align-items: center !important;
     justify-content: center !important;
     opacity: 1 !important;
-    box-shadow: 0 2px 10px rgba(10, 8, 56, 0.35) !important;
+    box-shadow: 0 2px 10px rgba(35, 31, 32, 0.35) !important;
     transition: background-color 0.15s ease !important;
     position: absolute !important;
     left: 12px !important;
@@ -669,7 +732,7 @@ body.voa-sidebar-expanded button[data-testid="stExpandSidebarButton"] {{
     opacity: 0 !important;
 }}
 
-section[data-testid="stSidebar"] hr {{ border-color: rgba(255,255,255,0.14); }}
+section[data-testid="stSidebar"] hr {{ border-color: rgba(255,255,255,0.12); }}
 section[data-testid="stSidebar"] [data-baseweb="radio"] label {{
     padding: 8px 10px; border-radius: 6px; transition: background 0.15s ease;
 }}
@@ -680,46 +743,61 @@ section[data-testid="stSidebar"] [data-baseweb="radio"] input:checked ~ div {{
     background: rgba(227, 24, 55, 0.22) !important;
 }}
 
-/* ── Sidebar inputs: uniform beige background + high-contrast dark text ── */
+/* ── Sidebar inputs: premium dark glass styling with white text ── */
 section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
 section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] > div,
 section[data-testid="stSidebar"] div[data-testid="stTextInput"] [data-baseweb="input"] > div,
 section[data-testid="stSidebar"] div[data-testid="stDateInput"] [data-baseweb="input"] > div,
 section[data-testid="stSidebar"] div[data-testid="stNumberInput"] [data-baseweb="input"] > div {{
-    min-height: 30px !important;
+    min-height: 34px !important;
     padding-top: 2px !important;
     padding-bottom: 2px !important;
-    padding-left: 8px !important;
-    background-color: #EBE5DA !important;
-    color: #231F20 !important;
-    border: 1px solid rgba(74, 69, 61, 0.35) !important;
-    border-radius: 6px !important;
+    padding-left: 10px !important;
+    background-color: rgba(24, 24, 26, 0.4) !important; /* Matte charcoal dark glass background */
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease-in-out !important;
 }}
 
-/* Sidebar input text, value and placeholder text — dark for legibility on beige */
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div:hover,
+section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] > div:hover,
+section[data-testid="stSidebar"] div[data-testid="stTextInput"] [data-baseweb="input"] > div:hover,
+section[data-testid="stSidebar"] div[data-testid="stDateInput"] [data-baseweb="input"] > div:hover {{
+    border-color: rgba(255, 255, 255, 0.22) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}}
+
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within,
+section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] > div:focus-within,
+section[data-testid="stSidebar"] div[data-testid="stTextInput"] [data-baseweb="input"] > div:focus-within {{
+    border-color: {MAHINDRA_RED} !important;
+    box-shadow: 0 0 0 2px rgba(227, 24, 55, 0.2) !important;
+}}
+
+/* Sidebar input text, value and placeholder text — clean white */
 section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] div,
 section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] span,
 section[data-testid="stSidebar"] div[data-testid="stSelectbox"] [data-baseweb="select"] [data-baseweb="value"],
 section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] div,
-section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] span,
-section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="tag"] {{
-    background-color: #EBE5DA !important;
-    color: #231F20 !important;
+section[data-testid="stSidebar"] div[data-testid="stMultiSelect"] [data-baseweb="select"] span {{
+    background-color: transparent !important;
+    color: #FFFFFF !important;
     font-size: 13.5px !important;
 }}
 
 /* Sidebar actual <input> and <textarea> elements */
 section[data-testid="stSidebar"] input,
 section[data-testid="stSidebar"] textarea {{
-    background-color: #EBE5DA !important;
-    color: #231F20 !important;
+    background-color: transparent !important;
+    color: #FFFFFF !important;
     font-size: 13.5px !important;
 }}
 
-/* Sidebar placeholder text — contrast-safe muted dark on beige */
+/* Sidebar placeholder text — soft light-gray */
 section[data-testid="stSidebar"] input::placeholder,
 section[data-testid="stSidebar"] textarea::placeholder {{
-    color: #4A453D !important;
+    color: rgba(255, 255, 255, 0.4) !important;
     opacity: 1 !important;
 }}
 
@@ -727,45 +805,56 @@ section[data-testid="stSidebar"] textarea::placeholder {{
 section[data-testid="stSidebar"] [data-baseweb="select"] [aria-placeholder],
 section[data-testid="stSidebar"] [data-baseweb="select"] [data-value=""],
 section[data-testid="stSidebar"] [data-baseweb="select"] > div > div:first-child {{
-    color: #4A453D !important;
+    color: rgba(255, 255, 255, 0.45) !important;
 }}
 
 /* Sidebar multiselect tag chips */
 section[data-testid="stSidebar"] [data-baseweb="tag"] {{
-    background-color: {ANCHOR_GREY_2} !important;
-    color: #F8FAFC !important;
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
 }}
 section[data-testid="stSidebar"] [data-baseweb="tag"] span {{
-    color: #F8FAFC !important;
+    color: #FFFFFF !important;
 }}
 
-/* Sidebar select caret/arrow icon — dark so visible on beige */
+/* Sidebar select caret/arrow icon — white for legibility */
 section[data-testid="stSidebar"] [data-baseweb="select"] svg {{
-    fill: #231F20 !important;
-    color: #231F20 !important;
+    fill: #FFFFFF !important;
+    color: #FFFFFF !important;
 }}
 
 .voa-eyebrow {{
-    font-family: {FONT_MONO};
+    font-family: var(--font-mono);
     font-size: var(--fs-label);
     letter-spacing: var(--ls-widest);
     text-transform: uppercase;
     font-weight: var(--fw-display);
     color: var(--brand);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     line-height: var(--lh-snug);
 }}
 .voa-eyebrow.on-dark {{ color: {CLARITY_RED}; }}
 
-/* KPI cards */
+/* KPI cards — Upgraded with glassmorphism backdrop filters and double border styling */
 .voa-kpi {{
-    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
-    padding: 14px 16px; height: 100%; box-shadow: 0 2px 8px rgba(35, 31, 32, 0.04);
-    transition: box-shadow 0.15s ease, transform 0.15s ease;
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 14px !important;
+    padding: 20px 22px !important;
+    height: 100%; 
+    box-shadow: 0 8px 32px 0 rgba(77, 77, 79, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.6) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }}
-.voa-kpi:hover {{ box-shadow: 0 6px 16px rgba(35, 31, 32, 0.08); transform: translateY(-1px); }}
+.voa-kpi:hover {{ 
+    box-shadow: 0 16px 36px 0 rgba(227, 24, 55, 0.08), 0 4px 12px 0 rgba(0, 0, 0, 0.02) !important;
+    transform: translateY(-4px) scale(1.01) !important;
+    border-color: rgba(227, 24, 55, 0.18) !important;
+}}
 .voa-kpi .label {{
-    font-family: {FONT_BODY};
+    font-family: var(--font-body);
     font-size: var(--fs-label);
     letter-spacing: var(--ls-wide);
     text-transform: uppercase;
@@ -773,30 +862,30 @@ section[data-testid="stSidebar"] [data-baseweb="select"] svg {{
     font-weight: var(--fw-medium);
 }}
 .voa-kpi .value {{
-    font-family: {FONT_MONO};
-    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
-    font-weight: var(--fw-display);
-    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+    font-weight: var(--fw-bold);
+    color: var(--navy);
     line-height: var(--lh-tight);
-    margin-top: 4px;
+    margin-top: 6px;
     letter-spacing: var(--ls-tight);
 }}
 .voa-kpi .sub {{
-    font-family: {FONT_BODY};
+    font-family: var(--font-body);
     font-size: var(--fs-small);
     color: var(--muted);
-    margin-top: 4px;
+    margin-top: 6px;
     line-height: var(--lh-snug);
 }}
-.voa-kpi.accent-brand {{ border-left: 4px solid var(--brand); }}
-.voa-kpi.accent-gold  {{ border-left: 4px solid var(--gold);  }}
-.voa-kpi.accent-sage  {{ border-left: 4px solid var(--sage);  }}
-.voa-kpi.accent-ink   {{ border-left: 4px solid var(--navy);  }}
+.voa-kpi.accent-brand {{ border-left: 5px solid var(--brand) !important; }}
+.voa-kpi.accent-gold  {{ border-left: 5px solid var(--gold) !important;  }}
+.voa-kpi.accent-sage  {{ border-left: 5px solid var(--sage) !important;  }}
+.voa-kpi.accent-ink   {{ border-left: 5px solid var(--navy) !important;  }}
 
 .voa-callout {{
     background: var(--brand-tint); border: 1px solid rgba(227, 24, 55, 0.18); border-left: 4px solid var(--brand);
-    border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
-    font-family: {FONT_BODY};
+    border-radius: 12px; padding: 16px 18px; margin-bottom: 12px;
+    font-family: var(--font-body);
     font-size: var(--fs-body);
     line-height: var(--lh-relaxed);
     color: var(--ink);
@@ -805,8 +894,8 @@ section[data-testid="stSidebar"] [data-baseweb="select"] svg {{
 .voa-callout.tone-sage {{ background: {SAGE_TINT}; border-color: rgba(45, 106, 79, 0.2); border-left-color: var(--sage); }}
 
 .voa-pill {{
-    display: inline-block; padding: 2px 9px; border-radius: 100px;
-    font-family: {FONT_BODY};
+    display: inline-block; padding: 3px 10px; border-radius: 100px;
+    font-family: var(--font-body);
     font-size: var(--fs-label);
     font-weight: var(--fw-display);
     letter-spacing: var(--ls-wide);
@@ -820,122 +909,143 @@ section[data-testid="stSidebar"] [data-baseweb="select"] svg {{
 .voa-pill.st-In-progress {{ background: var(--gold-tint); color: #7A5A22; }}
 .voa-pill.st-Closed {{ background: var(--sage-tint); color: #275038; }}
 
+/* Cards — Upgraded with glassmorphism backdrop filters and double border styling */
 .voa-card {{
-    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
-    padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(35, 31, 32, 0.04);
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 14px !important;
+    padding: 20px 22px !important;
+    margin-bottom: 14px !important;
+    box-shadow: 0 8px 32px 0 rgba(77, 77, 79, 0.03), inset 0 0 0 1px rgba(255, 255, 255, 0.5) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}}
+.voa-card:hover {{
+    box-shadow: 0 12px 28px 0 rgba(227, 24, 55, 0.05), 0 4px 10px 0 rgba(0, 0, 0, 0.01) !important;
+    transform: translateY(-3px) !important;
+    border-color: rgba(227, 24, 55, 0.12) !important;
 }}
 .voa-card .title {{
-    font-family: {FONT_DISPLAY};
+    font-family: var(--font-display);
     font-weight: var(--fw-display);
     font-size: var(--fs-h4);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    color: var(--navy) !important;
     letter-spacing: var(--ls-normal);
     line-height: var(--lh-snug);
 }}
 .voa-card .meta {{
-    font-family: {FONT_BODY};
+    font-family: var(--font-body);
     font-size: var(--fs-small);
     color: var(--muted);
-    margin-top: 6px;
+    margin-top: 8px;
     line-height: var(--lh-snug);
 }}
 .voa-quote {{
-    font-family: {FONT_BODY};
+    font-family: var(--font-body);
     font-style: italic;
     color: var(--ink-soft);
     font-size: var(--fs-small);
     line-height: var(--lh-relaxed);
-    border-left: 2px solid var(--brand);
-    padding-left: 10px;
-    margin-top: 6px;
+    border-left: 3px solid var(--brand);
+    padding-left: 12px;
+    margin-top: 8px;
 }}
 
 .voa-filter-bar {{
-    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 1rem;
-    padding: 10px 14px; background: {WHITE}; border: 1px solid var(--line); border-radius: 8px;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 1.2rem;
+    padding: 12px 16px; background: {WHITE}; border: 1px solid var(--line); border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(10, 8, 56, 0.02);
 }}
 .voa-filter-chip {{
-    display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px;
+    display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px;
     background: {CLARITY_GREY_1}; border: 1px solid var(--line); color: var(--ink-soft);
+    font-weight: 500;
 }}
 
 .stButton>button, .stDownloadButton>button {{
-    background: var(--navy); color: white; border: none; border-radius: 6px;
-    font-weight: 600; letter-spacing: 0.02em; transition: background 0.15s ease;
+    background: var(--navy) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    padding: 8px 16px !important;
+    letter-spacing: 0.02em !important;
+    transition: all 0.15s ease !important;
 }}
-.stButton>button:hover, .stDownloadButton>button:hover {{ background: var(--brand); color: white; }}
-.stButton>button[kind="secondary"] {{
-    background: transparent !important; color: var(--ink) !important;
+.stButton>button *, .stDownloadButton>button * {{
+    color: #FFFFFF !important;
+}}
+.stButton>button:hover, .stDownloadButton>button:hover {{ 
+    background: var(--brand) !important; 
+    color: #FFFFFF !important; 
+    box-shadow: 0 4px 12px rgba(227, 24, 55, 0.2) !important;
+    transform: translateY(-1px) !important;
+}}
+.stButton>button:hover *, .stDownloadButton>button:hover * {{
+    color: #FFFFFF !important;
+}}
+/* Main content area secondary buttons */
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] .stButton>button[kind="secondary"] {{
+    background: transparent !important;
+    color: var(--navy) !important;
     border: 1px solid var(--line) !important;
+}}
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] .stButton>button[kind="secondary"] * {{
+    color: var(--navy) !important;
+}}
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] .stButton>button[kind="secondary"]:hover {{
+    background: rgba(77, 77, 79, 0.04) !important;
+    border-color: var(--navy) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}}
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] .stButton>button[kind="secondary"]:hover * {{
+    color: var(--navy) !important;
+}}
+
+/* Sidebar area secondary buttons (including inactive nav buttons) */
+section[data-testid="stSidebar"] .stButton>button[kind="secondary"] {{
+    background: transparent !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}}
+section[data-testid="stSidebar"] .stButton>button[kind="secondary"] * {{
+    color: #FFFFFF !important;
+}}
+section[data-testid="stSidebar"] .stButton>button[kind="secondary"]:hover {{
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}}
+section[data-testid="stSidebar"] .stButton>button[kind="secondary"]:hover * {{
+    color: #FFFFFF !important;
 }}
 
 /* ── Autocomplete suggestion chips in sidebar ── */
 section[data-testid="stSidebar"] div[data-testid^="stButton-sugg_"] > button,
 section[data-testid="stSidebar"] div[data-testid*="sugg_"] > button {{
-    background: rgba(255,255,255,0.07) !important;
-    color: #E8E4DE !important;
-    border: 1px solid rgba(255,255,255,0.15) !important;
+    background: rgba(255,255,255,0.06) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
     border-radius: 6px !important;
     font-size: 12.5px !important;
     font-weight: 400 !important;
     letter-spacing: 0.01em !important;
-    padding: 4px 10px !important;
+    padding: 6px 12px !important;
     min-height: 0 !important;
     height: auto !important;
     text-align: left !important;
     justify-content: flex-start !important;
-    transition: background 0.12s ease, border-color 0.12s ease !important;
+    transition: all 0.15s ease !important;
 }}
 section[data-testid="stSidebar"] div[data-testid^="stButton-sugg_"] > button:hover,
 section[data-testid="stSidebar"] div[data-testid*="sugg_"] > button:hover {{
-    background: rgba(227,24,55,0.18) !important;
-    border-color: rgba(227,24,55,0.40) !important;
-    color: #F8FAFC !important;
-}}
-
-/* ── Nav tile buttons in sidebar ── */
-div[class*="st-key-nav_btn_"] button {{
-    display: flex !important;
-    align-items: center !important;
-    width: 100% !important;
-    min-height: max(2.75rem, 3.45vw) !important;
-    padding: 0 14px !important;
-    margin-bottom: 4px !important;
-    border-radius: 7px !important;
-    font-size: 13.5px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.01em !important;
-    text-align: left !important;
-    justify-content: flex-start !important;
-    transition: background 0.14s ease, border-color 0.14s ease !important;
-    border: 1px solid transparent !important;
-}}
-
-/* Inactive nav tiles */
-div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-secondary"] {{
-    background: rgba(255,255,255,0.05) !important;
-    color: rgba(248,250,252,0.78) !important;
-    border-color: rgba(255,255,255,0.10) !important;
-}}
-div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-secondary"]:hover {{
-    background: #EBE5DA !important;
-    border-color: #EBE5DA !important;
-    color: {INK_BLACK} !important;
-}}
-
-/* Active nav tile (primary) */
-div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"] {{
-    background: {MAHINDRA_RED} !important;
+    background: rgba(227,24,55,0.2) !important;
+    border-color: rgba(227,24,55,0.4) !important;
     color: #FFFFFF !important;
-    border-color: {MAHINDRA_RED} !important;
-    font-weight: 600 !important;
-    box-shadow: 0 2px 8px rgba(227,24,55,0.30) !important;
-}}
-div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"]:hover {{
-    background: #EBE5DA !important;
-    border-color: #EBE5DA !important;
-    color: {INK_BLACK} !important;
-    box-shadow: none !important;
+    transform: translateX(2px) !important;
 }}
 
 /* Remove the default stButton margin so tiles are tight */
@@ -944,29 +1054,36 @@ section[data-testid="stSidebar"] div[data-testid^="stButton-nav_btn_"] {{
     margin-bottom: 0 !important;
 }}
 
-button[data-baseweb="tab"] {{ font-family: {FONT_BODY}; font-weight: 600; color: var(--muted); }}
+button[data-baseweb="tab"] {{ font-family: var(--font-body); font-weight: 600; color: var(--muted); }}
 button[data-baseweb="tab"][aria-selected="true"] {{ color: var(--brand) !important; }}
 div[data-baseweb="tab-highlight"] {{ background-color: var(--brand) !important; }}
 
-[data-testid="stMetricValue"] {{ font-family: {FONT_MONO}; color: var(--ink); }}
+[data-testid="stMetricValue"] {{ font-family: var(--font-mono); color: var(--navy); }}
 hr {{ border-color: var(--line); }}
 
 /* ── Sliders ──────────────────────────────────────────────────────────── */
 div[data-testid="stSlider"] label,
 div[data-testid="stSlider"] p {{
-    color: #1b4332 !important;
+    color: var(--ink-soft) !important;
     font-weight: 600 !important;
 }}
 div[data-testid="stSlider"] [role="slider"] {{
-    background-color: #2D6A4F !important;
-    border-color: #2D6A4F !important;
-    box-shadow: 0 0 0 2px rgba(45, 106, 79, 0.2) !important;
+    background-color: var(--brand) !important;
+    border-color: var(--brand) !important;
+    box-shadow: 0 0 0 2px rgba(227, 24, 55, 0.2) !important;
+    transition: transform 0.15s ease !important;
 }}
-div[data-testid="stSlider"] [data-baseweb="slider"] > div > div {{
-    background: #2D6A4F !important;
+div[data-testid="stSlider"] [role="slider"]:hover {{
+    transform: scale(1.2) !important;
+}}
+div[data-testid="stSlider"] [data-baseweb="slider"] > div:first-child > div:first-child {{
+    background: var(--line) !important;
+}}
+div[data-testid="stSlider"] [data-baseweb="slider"] > div:first-child > div:nth-child(2) {{
+    background: var(--brand) !important;
 }}
 div[data-testid="stSlider"] [data-baseweb="slider"] div {{
-    color: #1b4332 !important;
+    color: var(--ink-soft) !important;
 }}
 
 /* ── Text & Widget Readability (Forces light theme contrast in main area) ── */
@@ -980,6 +1097,12 @@ div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="st
     background-color: #FFFFFF !important;
     color: #231F20 !important;
     border: 1px solid #E5DFD3 !important;
+    border-radius: 8px !important;
+    transition: border-color 0.2s ease !important;
+}}
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-baseweb="input"] > div:focus-within,
+div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-baseweb="select"] > div:focus-within {{
+    border-color: var(--brand) !important;
 }}
 
 /* For selectbox and multiselect selection containers */
@@ -1012,6 +1135,8 @@ div[role="listbox"],
     background-color: #EBE5DA !important;
     color: #231F20 !important;
     border-color: rgba(74, 69, 61, 0.35) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 18px rgba(10, 8, 56, 0.15) !important;
 }}
 
 li[role="option"],
@@ -1054,7 +1179,7 @@ li[role="option"][aria-selected="true"] *,
 }}
 
 section[data-testid="stSidebar"] [data-baseweb="tag"] {{
-    background-color: #1a162b !important;
+    background-color: rgba(255, 255, 255, 0.12) !important;
     color: #FFFFFF !important;
     border: 1px solid rgba(255,255,255,0.12) !important;
 }}
@@ -1067,11 +1192,13 @@ section[data-testid="stSidebar"] [data-baseweb="tag"] span {{
 div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] {{
     background-color: #FFFFFF !important;
     border: 1px solid #E5DFD3 !important;
-    border-radius: 8px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 10px rgba(35, 31, 32, 0.02) !important;
 }}
 div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] summary {{
     background-color: #FFFFFF !important;
     color: #231F20 !important;
+    border-radius: 12px !important;
 }}
 div[data-testid="stAppViewContainer"] [data-testid="stMain"] div[data-testid="stExpander"] summary:hover {{
     background-color: #F6F2EA !important;
@@ -1095,6 +1222,82 @@ div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-testid="stWid
     font-weight: 600 !important;
 }}
 
+/* ── Hurry Panel (Executive snap summary) — Upgraded with glassmorphism and custom brand left-border ── */
+.voa-hurry-panel {{
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-left: 5px solid var(--brand) !important; /* Rich red accent left-border */
+    border-radius: 14px !important;
+    padding: 20px 24px !important;
+    margin-bottom: 1.5rem !important;
+    box-shadow: 0 8px 32px 0 rgba(77, 77, 79, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}}
+.voa-hurry-panel:hover {{
+    box-shadow: 0 16px 36px 0 rgba(227, 24, 55, 0.08), 0 4px 12px 0 rgba(0, 0, 0, 0.02) !important;
+    transform: translateY(-2px) !important;
+    border-color: rgba(227, 24, 55, 0.12) !important;
+    border-left-color: var(--brand) !important;
+}}
+.voa-hurry-panel .hurry-title {{
+    font-family: var(--font-display) !important;
+    font-size: 1.15rem !important;
+    font-weight: 600 !important;
+    color: var(--navy) !important;
+    margin-bottom: 12px !important;
+    letter-spacing: -0.01em !important;
+}}
+.voa-hurry-panel ul {{
+    margin: 0 !important;
+    padding-left: 20px !important;
+    font-size: 14px !important;
+    color: var(--ink) !important;
+    font-family: var(--font-body) !important;
+    list-style-type: square !important;
+}}
+.voa-hurry-panel li {{
+    margin-bottom: 8px !important;
+    line-height: 1.6 !important;
+}}
+.voa-hurry-panel li::marker {{
+    color: var(--brand) !important;
+}}
+
+/* ── Active Nav Buttons — Upgraded with glowing red gradient and clean white border-left ── */
+div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"] {{
+    background: linear-gradient(135deg, {MAHINDRA_RED} 0%, #B8142C 100%) !important;
+    color: #FFFFFF !important;
+    border-color: {MAHINDRA_RED} !important;
+    border-left: 4px solid #FFFFFF !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(227, 24, 55, 0.3) !important;
+}}
+div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"]:hover {{
+    background: linear-gradient(135deg, {MAHINDRA_RED} 0%, #B8142C 100%) !important;
+    color: #FFFFFF !important;
+    opacity: 0.95 !important;
+    box-shadow: 0 6px 18px rgba(227, 24, 55, 0.4) !important;
+}}
+
+/* Nav button left-border indicator for hover states */
+div[class*="st-key-nav_btn_"] button::after {{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 3px;
+    background-color: var(--brand);
+    border-radius: 0 4px 4px 0;
+    opacity: 0;
+    transform: scaleY(0.3);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}}
+div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"]::after {{
+    display: none !important; /* Hide after indicator because active button uses a solid border-left */
+}}
+
 {icons_css}
 </style>
 <script>
@@ -1106,8 +1309,8 @@ div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-testid="stWid
     /* ── File uploader dropzones ── */
     var dropzones = sidebar.querySelectorAll('[data-testid="stFileUploaderDropzone"]');
     dropzones.forEach(function(dz) {{
-      dz.style.setProperty('background-color', 'rgba(255,255,255,0.06)', 'important');
-      dz.style.setProperty('border', '1px solid rgba(255,255,255,0.18)', 'important');
+      dz.style.setProperty('background-color', 'rgba(255, 255, 255, 0.05)', 'important');
+      dz.style.setProperty('border', '1px dashed rgba(255, 255, 255, 0.25)', 'important');
       dz.style.setProperty('border-radius', '8px', 'important');
 
       /* All descendant text nodes */
@@ -1117,9 +1320,9 @@ div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-testid="stWid
 
       /* Upload button(s) */
       dz.querySelectorAll('button').forEach(function(btn) {{
-        btn.style.setProperty('background-color', 'rgba(255,255,255,0.10)', 'important');
+        btn.style.setProperty('background-color', 'rgba(255, 255, 255, 0.10)', 'important');
         btn.style.setProperty('color', '#F8FAFC', 'important');
-        btn.style.setProperty('border', '1px solid rgba(255,255,255,0.30)', 'important');
+        btn.style.setProperty('border', '1px solid rgba(255, 255, 255, 0.30)', 'important');
         btn.style.setProperty('border-radius', '6px', 'important');
       }});
 
@@ -1132,8 +1335,8 @@ div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-testid="stWid
     /* ── Expander containers (details/summary) ── */
     var expanders = sidebar.querySelectorAll('[data-testid="stExpander"]');
     expanders.forEach(function(exp) {{
-      exp.style.setProperty('background-color', 'rgba(255,255,255,0.04)', 'important');
-      exp.style.setProperty('border', '1px solid rgba(255,255,255,0.12)', 'important');
+      exp.style.setProperty('background-color', 'rgba(255, 255, 255, 0.04)', 'important');
+      exp.style.setProperty('border', '1px solid rgba(255, 255, 255, 0.10)', 'important');
       exp.style.setProperty('border-radius', '8px', 'important');
 
       /* details element */
@@ -1143,7 +1346,7 @@ div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-testid="stWid
 
       /* summary header */
       exp.querySelectorAll('summary').forEach(function(s) {{
-        s.style.setProperty('background-color', 'rgba(255,255,255,0.08)', 'important');
+        s.style.setProperty('background-color', 'rgba(255, 255, 255, 0.06)', 'important');
         s.style.setProperty('border-radius', '8px', 'important');
         s.style.setProperty('color', '#F8FAFC', 'important');
         /* Expander chevron icon */
@@ -1257,45 +1460,6 @@ div[data-testid="stAppViewContainer"] [data-testid="stMain"] [data-testid="stWid
   observer.observe(document.body, {{ childList: true, subtree: true, attributes: true, attributeFilter: ['aria-expanded', 'style', 'class'] }});
   setInterval(syncSidebarExpandControl, 500);
 
-  function debugSidebarCollapse() {{
-    var doc = document;
-    var btn = doc.querySelector('[data-testid="collapsedControl"]');
-    var oldBtn = doc.querySelector('[data-testid="stSidebarCollapseButton"]');
-    
-    var info = "Debug: ";
-    if (btn) {{
-      info += "[collapsedControl found! Tag: " + btn.tagName + ", Class: " + btn.className + ", Display: " + window.getComputedStyle(btn).display + "]";
-    }} else {{
-      info += "[collapsedControl NOT found] ";
-    }}
-    if (oldBtn) {{
-      info += "[stSidebarCollapseButton found! Tag: " + oldBtn.tagName + ", Class: " + oldBtn.className + ", Display: " + window.getComputedStyle(oldBtn).display + "]";
-    }} else {{
-      info += "[stSidebarCollapseButton NOT found]";
-    }}
-    
-    var buttons = doc.querySelectorAll('button');
-    var btnInfo = [];
-    buttons.forEach(function(b, idx) {{
-      var tid = b.getAttribute('data-testid') || '';
-      var cls = b.className || '';
-      var txt = b.innerText || b.textContent || '';
-      if (tid.includes('collapse') || tid.includes('Control') || cls.includes('collapse') || txt.toLowerCase().includes('collapse') || b.querySelector('svg')) {{
-        btnInfo.push(idx + ': tid=' + tid + ' txt=\"' + txt.substring(0, 10) + '\"');
-      }}
-    }});
-    info += " | Match: " + btnInfo.join("; ");
-    
-    var debugDiv = doc.getElementById('sidebar-debug-box');
-    if (!debugDiv) {{
-      debugDiv = doc.createElement('div');
-      debugDiv.id = 'sidebar-debug-box';
-      debugDiv.style.cssText = 'position:fixed; bottom:10px; right:10px; background:rgba(0,0,0,0.85); color:lime; padding:10px; border-radius:5px; font-family:monospace; font-size:11px; z-index:999999; max-width:400px; word-break:break-all;';
-      doc.body.appendChild(debugDiv);
-    }}
-    debugDiv.innerText = info;
-  }}
-  setInterval(debugSidebarCollapse, 2000);
 }})();
 </script>
 """

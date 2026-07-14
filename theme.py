@@ -1298,6 +1298,83 @@ div[class*="st-key-nav_btn_"] button[data-testid="stBaseButton-primary"]::after 
     display: none !important; /* Hide after indicator because active button uses a solid border-left */
 }}
 
+/* Print Button styling */
+.voa-print-btn {{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 999px !important;
+    padding: 6px 14px !important;
+    color: #FFFFFF !important;
+    font-family: var(--font-body) !important;
+    font-size: var(--fs-label) !important;
+    font-weight: var(--fw-medium) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    z-index: 10 !important;
+    position: relative !important;
+}}
+.voa-print-btn:hover {{
+    background: var(--brand) !important;
+    border-color: var(--brand) !important;
+    box-shadow: 0 4px 12px rgba(227, 24, 55, 0.3) !important;
+}}
+
+/* Print CSS overrides */
+@media print {{
+    * {{
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }}
+    div[data-testid="stAppViewContainer"],
+    div[data-testid="stAppViewContainer"] *,
+    [data-testid="stMain"],
+    .stApp {{
+        opacity: 1 !important;
+        filter: none !important;
+    }}
+    section[data-testid="stSidebar"],
+    .voa-print-btn,
+    [data-testid="stHeader"],
+    div[data-testid="collapsedControl"],
+    div[data-testid="stSidebarCollapsedControl"],
+    button[data-testid="stExpandSidebarButton"] {{
+        display: none !important;
+        visibility: hidden !important;
+    }}
+    .block-container {{
+        padding: 0 !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }}
+    .stApp {{
+        background: none !important;
+        background-color: #FFFFFF !important;
+    }}
+    .voa-hero {{
+        background: rgba(77, 77, 79, 0.06) !important;
+        border: 1px solid rgba(77, 77, 79, 0.12) !important;
+        box-shadow: none !important;
+        border-radius: 8px !important;
+        margin: 0 0 1.2rem 0 !important;
+        padding: 20px !important;
+    }}
+    .voa-hero .title {{
+        color: var(--navy) !important;
+    }}
+    .voa-hero .subtitle {{
+        color: var(--ink) !important;
+    }}
+    .voa-card, .voa-kpi, .voa-hurry-panel {{
+        page-break-inside: avoid !important;
+        background: #FFFFFF !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(77, 77, 79, 0.15) !important;
+    }}
+}}
+
 {icons_css}
 </style>
 <script>

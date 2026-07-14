@@ -465,6 +465,16 @@ with st.sidebar:
             st.text_input("Azure Deployment Name", value=os.environ.get("AZURE_OPENAI_DEPLOYMENT", ""), placeholder="gpt-4o-mini", key="azure_deployment")
             st.caption("Provide Azure OpenAI credentials and deployment details for enterprise-hosted AI insights.")
 
+    st.markdown("<hr/>", unsafe_allow_html=True)
+    if st.button("🖨️ Export Dashboard as PDF", type="secondary", use_container_width=True, key="sidebar_export_pdf"):
+        import time
+        t_sec = int(time.time())
+        st.components.v1.html(
+            f"<script>setTimeout(function() {{ window.parent.print(); }}, 500);</script><!-- {t_sec} -->",
+            height=0,
+            width=0,
+        )
+
     # Read uploaded bytes directly from widgets
     dashboard_bytes = up_dash.getvalue() if up_dash is not None else None
     library_bytes = up_lib.getvalue() if up_lib is not None else None
